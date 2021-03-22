@@ -53,6 +53,9 @@ def exterqual_numeric(x):
 
 
 def add_neighborhood_loc(x):
+    '''
+    Function to make numbers from neighborhood categorial feature
+    '''
     if 'MeadowV' in x or 'Edwards' in x or 'Sawyer' in x or 'Landmrk' in x or 'SWISU' in x or 'BrDale' in x or 'IDOTRR' in x:
         return 1
     elif 'NAmes' in x or 'Mitchel' in x or 'BrkSide' in x or 'NPkVill' in x or 'OldTown' in x or 'ClearCr' in x or 'Gilbert' in x:
@@ -64,6 +67,10 @@ def add_neighborhood_loc(x):
 
 
 def add_location_feature(df_exout):
+    '''
+    Add location feature to df
+    Return: df, dataframe with new feature
+    '''
     df_exout['Functional_Num'] = df_exout.Functional.map(functional_numeric)
     df_exout['ExterCond_Num'] = df_exout.ExterCond.map(extercond_numeric)
     df_exout['ExterQual_Num'] = df_exout.ExterQual.map(exterqual_numeric)

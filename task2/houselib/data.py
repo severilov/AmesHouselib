@@ -14,6 +14,10 @@ cols = ['MSSubClass', 'LotFrontage', 'LotArea', 'OverallQual', 'OverallCond', 'Y
 
 
 def read_ames_data(datapath='../data/AmesHousing.txt'):
+    '''
+    Read data from datapath
+    Return : df, dataframe
+    '''
     with open(datapath) as f:
         reader = csv.reader(f, delimiter="\t")
         raw_data = list(reader)
@@ -25,6 +29,9 @@ def read_ames_data(datapath='../data/AmesHousing.txt'):
 
 
 def prepare_data(df):
+    '''
+    Return : df, prepared dataframe
+    '''
     df.drop(['Order'], axis=1, inplace=True)
 
     # DataFRame is full of 'NA' pr blank entries that need to be turned to proper NAN
@@ -44,6 +51,10 @@ def prepare_data(df):
 
 
 def fill_lot_frontage(df):
+    '''
+    Fill NaN values in LotFrontage feature
+    Return : df, dataframe with filled NaN in LotFrontage
+    '''
     # Examine the 'Lots' grouping.
     df_lots = df[['LotFrontage', 'LotArea', 'LotConfig', 'LotShape']]
 
@@ -70,6 +81,11 @@ def fill_lot_frontage(df):
 
 
 def delete_outliers(df):
+    '''
+    Delete outliers, which are 3 std above the mean and
+    sales which are non-commercial transactions, add per square foot feature
+    Return: df_exout, df with deleted outliers
+    '''
     # 3 std above the mean
     df_exout = df[(df.SalePrice < np.mean(df.SalePrice) + 3*np.std(df.SalePrice))]
     df_exout = df_exout[(df_exout.GrLivArea < np.mean(df.GrLivArea) + 3*np.std(df.GrLivArea))]
@@ -86,6 +102,9 @@ def delete_outliers(df):
 
 
 def add_zoning(x):
+    '''
+    Function to make numbers from zoning categorial feature
+    '''
     if 'RM' in x:
         return 1
     elif 'RH' in x:
@@ -97,6 +116,10 @@ def add_zoning(x):
 
 
 def add_new_features(df):
+    '''
+    Add age, BaseLivArea, YrSold, Zoning features to df
+    Return: df, dataframe with new features
+    '''
     # Adding structure age variable depending if there was a major remodeling
     df['Age'] = df.apply(lambda x: x['YrSold']-x['YearBuilt'] if (x['YearBuilt']<x['YearRemod/Add'])
                                                            else (x['YrSold']-x['YearRemod/Add']), axis=1)
