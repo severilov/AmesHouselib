@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>houselib package &#8212; Task2 documentation (houselib library)  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="houselib" href="modules.html" />
+    <link rel="prev" title="Welcome to Task2 documentation (houselib library)’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="houselib"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Task2 documentation (houselib library)’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Task2 documentation (houselib library)  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="houselib-package">
+<h1>houselib package<a class="headerlink" href="#houselib-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-houselib.data">
+<span id="houselib-data-module"></span><h2>houselib.data module<a class="headerlink" href="#module-houselib.data" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="houselib.data.add_new_features">
+<code class="sig-prename descclassname">houselib.data.</code><code class="sig-name descname">add_new_features</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.data.add_new_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add age, BaseLivArea, YrSold, Zoning features to df
+Return: df, dataframe with new features</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.data.add_zoning">
+<code class="sig-prename descclassname">houselib.data.</code><code class="sig-name descname">add_zoning</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.data.add_zoning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to make numbers from zoning categorial feature</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.data.delete_outliers">
+<code class="sig-prename descclassname">houselib.data.</code><code class="sig-name descname">delete_outliers</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.data.delete_outliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete outliers, which are 3 std above the mean and
+sales which are non-commercial transactions, add per square foot feature
+Return: df_exout, df with deleted outliers</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.data.fill_lot_frontage">
+<code class="sig-prename descclassname">houselib.data.</code><code class="sig-name descname">fill_lot_frontage</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.data.fill_lot_frontage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill NaN values in LotFrontage feature
+Return : df, dataframe with filled NaN in LotFrontage</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.data.log_target">
+<code class="sig-prename descclassname">houselib.data.</code><code class="sig-name descname">log_target</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.data.log_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>log transformation of targets</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.data.prepare_data">
+<code class="sig-prename descclassname">houselib.data.</code><code class="sig-name descname">prepare_data</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.data.prepare_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return : df, prepared dataframe</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.data.read_ames_data">
+<code class="sig-prename descclassname">houselib.data.</code><code class="sig-name descname">read_ames_data</code><span class="sig-paren">(</span><em class="sig-param">datapath='../data/AmesHousing.txt'</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.data.read_ames_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from datapath
+Return : df, dataframe</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-houselib.location_feature">
+<span id="houselib-location-feature-module"></span><h2>houselib.location_feature module<a class="headerlink" href="#module-houselib.location_feature" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="houselib.location_feature.add_location_feature">
+<code class="sig-prename descclassname">houselib.location_feature.</code><code class="sig-name descname">add_location_feature</code><span class="sig-paren">(</span><em class="sig-param">df_exout</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.location_feature.add_location_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add location feature to df
+Return: df, dataframe with new feature</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.location_feature.add_neighborhood_loc">
+<code class="sig-prename descclassname">houselib.location_feature.</code><code class="sig-name descname">add_neighborhood_loc</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.location_feature.add_neighborhood_loc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to make numbers from neighborhood categorial feature</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.location_feature.extercond_numeric">
+<code class="sig-prename descclassname">houselib.location_feature.</code><code class="sig-name descname">extercond_numeric</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.location_feature.extercond_numeric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creating a new numeric ordinal variable for external conditon or ‘ExterCond’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.location_feature.exterqual_numeric">
+<code class="sig-prename descclassname">houselib.location_feature.</code><code class="sig-name descname">exterqual_numeric</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.location_feature.exterqual_numeric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creating a new numeric ordinal variable for external quality or ‘ExterQual’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.location_feature.functional_numeric">
+<code class="sig-prename descclassname">houselib.location_feature.</code><code class="sig-name descname">functional_numeric</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.location_feature.functional_numeric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creating a new numeric ordinal variable for ‘Functional’</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-houselib.utils">
+<span id="houselib-utils-module"></span><h2>houselib.utils module<a class="headerlink" href="#module-houselib.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="houselib.utils.fix_seeds">
+<code class="sig-prename descclassname">houselib.utils.</code><code class="sig-name descname">fix_seeds</code><span class="sig-paren">(</span><em class="sig-param">seed=42</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.utils.fix_seeds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fix random seed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.utils.get_df">
+<code class="sig-prename descclassname">houselib.utils.</code><code class="sig-name descname">get_df</code><span class="sig-paren">(</span><em class="sig-param">prepared_data_path='../data/ames_prepared.csv'</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.utils.get_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read prepared data
+Return: df_0609, df_2010, dataframes divided into 2006-2009 and 2010 parts</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.utils.load_model">
+<code class="sig-prename descclassname">houselib.utils.</code><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param">path='../models/model.pkl'</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.utils.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load ML model from path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="houselib.utils.save_model">
+<code class="sig-prename descclassname">houselib.utils.</code><code class="sig-name descname">save_model</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">path='../models/model.pkl'</em><span class="sig-paren">)</span><a class="headerlink" href="#houselib.utils.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save ML model into path</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-houselib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-houselib" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">houselib package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-houselib.data">houselib.data module</a></li>
+<li><a class="reference internal" href="#module-houselib.location_feature">houselib.location_feature module</a></li>
+<li><a class="reference internal" href="#module-houselib.utils">houselib.utils module</a></li>
+<li><a class="reference internal" href="#module-houselib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Task2 documentation (houselib library)’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="next chapter">houselib</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/houselib.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="houselib"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Task2 documentation (houselib library)’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Task2 documentation (houselib library)  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Pavel Severilov.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.0.
+    </div>
+  </body>
+</html>
