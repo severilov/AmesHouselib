@@ -10,7 +10,7 @@ def fix_seeds(seed=42):
     np.random.seed(seed)
 
 
-def save_model(model, path='../models/model.pkl'):
+def save_model(model, path='./src/models/model.pkl'):
     '''
     Save ML model into path
     '''
