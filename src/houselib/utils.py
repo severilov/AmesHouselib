@@ -27,6 +27,7 @@ def load_model(path='../models/model.pkl'):
 
     return model
 
+
 def get_df(prepared_data_path='../data/ames_prepared.csv'):
     '''
     Read prepared data
