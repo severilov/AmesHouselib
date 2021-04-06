@@ -10,7 +10,7 @@ def fix_seeds(seed=42):
     np.random.seed(seed)
 
 
-def save_model(model, path='../models/model.pkl'):
+def save_model(model, path='./src/models/model.pkl'):
     '''
     Save ML model into path
     '''
@@ -26,6 +26,7 @@ def load_model(path='../models/model.pkl'):
         model = pickle.load(model_file)
 
     return model
+
 
 def get_df(prepared_data_path='../data/ames_prepared.csv'):
     '''
