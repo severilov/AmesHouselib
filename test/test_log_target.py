@@ -1,6 +1,5 @@
 # log_target
 import sys
-import pytest
 import numpy as np
 
 sys.path.append('./src/')

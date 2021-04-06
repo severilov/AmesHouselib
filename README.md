@@ -70,3 +70,26 @@ docker rmi $(docker images -q)
 ```
 
 ### Unit tests
+```
+|____ test
+      |____ test_add_new_features.py
+      |____ test_delete_outliers.py
+      |____ test_fill_nan.py
+      |____ test_log_target.py
+      |____ test_read_data.py
+      |____ test_save_load_model.py
+      |____ test_script_test.sh
+      |____ test_script_train.sh
+|____ requirements-test.txt
+```
+Мутационный анализ тестов (количество выживших мутантов):
+* test_add_new_features.py: 2/24
+* test_delete_outliers.py: 13/45
+* test_fill_nan.py: 1/7
+* test_log_target.py: 2/17
+* test_read_data.py: 2/22
+* test_save_load_model.py: 2/29
+
+Все неубитые мутанты оказались нерелевантны для тестирования. Большая часть из неубитых 22 мутантов связана с импортом библиотеки (строка sys.path.append('./src/')) 
+
+Bash скрипты по тестированию скриптов обучения и тестирования отработали с выводом "OK"

@@ -1,6 +1,5 @@
 # fill_lot_frontage
 import sys
-import pytest
 
 sys.path.append('./src/')
 

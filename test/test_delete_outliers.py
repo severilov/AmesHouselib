@@ -1,6 +1,5 @@
 # delete_outliers
 import sys
-import pytest
 import numpy as np
 
 sys.path.append('./src/')
