@@ -1,0 +1,4 @@
+outs:
+- md5: ddbfef0bfa2f00cb3af25ea843463b88
+  size: 26541
+  path: ames_prepared.csv
