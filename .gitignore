@@ -3,5 +3,4 @@ docs/build/
 *.DS_Store
 log.txt
 .mutmut-cache
-data/
 .idea
