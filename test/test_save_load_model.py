@@ -30,7 +30,7 @@ def test_save_model(path):
     '''
     Check if function saved model correctly
     '''
-    df_0609, df_2010 = get_df('./data/ames_prepared.csv')
+    df_0609, df_2010 = get_df('./data/processed/ames_prepared.csv')
     y_lnSP = df_0609['LnSalePrice']
     X = df_0609.drop(['SalePrice', 'LnSalePrice'], axis=1)
 

@@ -7,7 +7,7 @@ sys.path.append('./src/')
 from houselib import get_df, read_ames_data
 
 
-@pytest.mark.parametrize('path', ['./data/AmesHousing.txt'])
+@pytest.mark.parametrize('path', ['./data/raw/AmesHousing.txt'])
 def test_read_ames_data(path):
     '''
     Test if function read data correctly
@@ -17,7 +17,7 @@ def test_read_ames_data(path):
     assert df.shape == (2930, 82)
 
 
-@pytest.mark.parametrize('path', ['./data/ames_prepared.csv'])
+@pytest.mark.parametrize('path', ['./data/processed/ames_prepared.csv'])
 def test_get_df(path):
     '''
     Test if function read prepared data correctly
