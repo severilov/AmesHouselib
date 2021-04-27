@@ -10,7 +10,7 @@ stages:
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
-  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG/docker_houselib
   CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
 
 before_script:
@@ -44,8 +44,7 @@ pytest:
   stage: test
   script:
     - docker pull $CONTAINER_TEST_IMAGE
-    - docker run -v $(pwd):/content $CONTAINER_TEST_IMAGE pytest --cov=houselib \
-                                                                 --cov-branch \
+    - docker run -v $(pwd):/content $CONTAINER_TEST_IMAGE pytest --cov=houselib --cov-branch \
                                                                  --cov-report term-missing \
                                                                  --cov-report xml:/content/coverage.xml test \
                                                                  --junitxml=/content/report.xml
