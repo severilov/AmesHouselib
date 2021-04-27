@@ -1,5 +1,3 @@
-image: python:3.7-alpine
-
 image: docker:19.03.12
 services:
   - docker:19.03.12-dind
@@ -19,7 +17,6 @@ before_script:
   - apk update
   - apk add python3
   - apk add py3-pip
-  - docker info
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - pip3 install -U sphinx
 
@@ -29,6 +26,8 @@ build:
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CONTAINER_TEST_IMAGE .
     - docker push $CONTAINER_TEST_IMAGE
+  tags:
+    - local
 
 test_documentation:
   stage: test
@@ -38,7 +37,8 @@ test_documentation:
     - branches
   except:
     - master
-
+  tags:
+    - local
 
 pytest:
   stage: test
@@ -54,6 +54,19 @@ pytest:
     reports:
       junit: report.xml
       cobertura: coverage.xml
+  tags:
+    - local
+
+release-image:
+  stage: release
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+  only:
+    - master
+  tags:
+    - local
 
 pages:
   stage: deploy
@@ -64,14 +77,5 @@ pages:
       - public
   only:
     - master
-
-release-image:
-  stage: release
   tags:
     - local
-  script:
-    - docker pull $CONTAINER_TEST_IMAGE
-    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
-    - docker push $CONTAINER_RELEASE_IMAGE
-  only:
-    - master
