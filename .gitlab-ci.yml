@@ -45,10 +45,7 @@ pytest:
   stage: test
   script:
     - docker pull $CONTAINER_TEST_IMAGE
-    - docker run -v $(pwd):/content $CONTAINER_TEST_IMAGE pytest --cov=houselib \
-                                                                 --cov-report term-missing \
-                                                                 --cov-report xml:/content/coverage.xml test \
-                                                                 --junitxml=/content/report.xml
+    - docker run $CONTAINER_TEST_IMAGE pytest --cov=houselib
   artifacts:
     when: always
     reports:
