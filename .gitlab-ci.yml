@@ -1,22 +1,77 @@
 image: python:3.7-alpine
 
-test:
+image: docker:19.03.12
+services:
+  - docker:19.03.12-dind
+
+stages:
+  - build
+  - test
+  - release
+  - deploy
+
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+
+before_script:
+  - apk update
+  - apk add python3
+  - apk add py3-pip
+  - docker info
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - pip3 install -U sphinx
+
+build:
+  stage: build
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+
+test_documentation:
   stage: test
   script:
-  - pip install -U sphinx
-  - sphinx-build -b html ./docs/source ./public
+    - sphinx-build -b html ./docs/source ./public
   only:
-  - branches
+    - branches
   except:
-  - master
+    - master
+
+
+pytest:
+  stage: test
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker run -v $(pwd):/content $CONTAINER_TEST_IMAGE pytest --cov=housinglib \
+                                                                 --cov-branch \
+                                                                 --cov-report term-missing \
+                                                                 --cov-report xml:/content/coverage.xml test \
+                                                                 --junitxml=/content/report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+      cobertura: coverage.xml
 
 pages:
   stage: deploy
   script:
-  - pip install -U sphinx
-  - sphinx-build -b html ./docs/source ./public
+    - sphinx-build -b html ./docs/source ./public
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - master
+    - master
+
+release-image:
+  stage: release
+  tags:
+    - local
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+  only:
+    - master
