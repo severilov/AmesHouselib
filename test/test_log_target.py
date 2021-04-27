@@ -11,7 +11,7 @@ def test_log_target():
     '''
     Test if function add log variable to df and add it correctly
     '''
-    df = read_ames_data('./data/AmesHousing.txt')
+    df = read_ames_data('./data/raw/AmesHousing.txt')
     df = prepare_data(df)
     df = fill_lot_frontage(df)
     df = add_new_features(df)

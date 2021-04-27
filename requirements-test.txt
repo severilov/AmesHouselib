@@ -1,3 +1,5 @@
 pytest==6.2.3
 hypothesis==6.8.5
 mutmut==2.1.0
+pytest-cov
+coverage

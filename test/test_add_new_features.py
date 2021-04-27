@@ -10,7 +10,7 @@ def test_add_new_features():
     '''
     Test if all needed features were added
     '''
-    df = read_ames_data('./data/AmesHousing.txt')
+    df = read_ames_data('./data/raw/AmesHousing.txt')
     df = prepare_data(df)
     df = fill_lot_frontage(df)
     df = add_new_features(df)
@@ -25,7 +25,7 @@ def test_add_location_feature():
     '''
     Test if location needed feature was added
     '''
-    df = read_ames_data('./data/AmesHousing.txt')
+    df = read_ames_data('./data/raw/AmesHousing.txt')
     df = prepare_data(df)
     df = fill_lot_frontage(df)
     df = add_new_features(df)

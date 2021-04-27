@@ -10,7 +10,7 @@ def test_fill_lot_frontage():
     '''
     Check if NaN values has gone
     '''
-    df = read_ames_data('./data/AmesHousing.txt')
+    df = read_ames_data('./data/raw/AmesHousing.txt')
     df = prepare_data(df)
     df = fill_lot_frontage(df)
     assert df.LotFrontage.isnull().sum() == 0
