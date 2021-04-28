@@ -13,7 +13,7 @@ requirements:
 
 ## Download Data from Google-Drive using dvc
 sync_data_from_drive:
-	dvc pull data/
+	dvc pull data/ # TODO
 
 ## Delete all compiled Python files recursively in the current directory
 clean:
@@ -49,8 +49,8 @@ tests:
 	pytest --cov=houselib \
 				 --cov-branch \
 				 --cov-report term-missing \
-				 --cov-report xml:./coverage.xml test \
-				 --junitxml=./report.xml
+				 --cov-report xml:./results/coverage.xml test \
+				 --junitxml=./results/report.xml
 
 .DEFAULT: help
 help:
