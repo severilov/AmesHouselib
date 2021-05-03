@@ -1,8 +1,4 @@
 # fill_lot_frontage
-import sys
-
-sys.path.append('./src/')
-
 from houselib import fill_lot_frontage, read_ames_data, prepare_data
 
 

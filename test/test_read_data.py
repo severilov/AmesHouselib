@@ -1,8 +1,5 @@
 # get_df, read_ames_data
-import sys
 import pytest
-
-sys.path.append('./src/')
 
 from houselib import get_df, read_ames_data
 

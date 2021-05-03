@@ -1,8 +1,4 @@
 # add_new_features
-import sys
-
-sys.path.append('./src/')
-
 from houselib import add_new_features, add_location_feature, read_ames_data, prepare_data, fill_lot_frontage
 
 

@@ -1,5 +1,4 @@
 # load_model, save_model
-import sys
 import os
 import pytest
 import pandas as pd
@@ -7,8 +6,6 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-
-sys.path.append('./src/')
 
 from houselib import save_model, load_model, get_df
 
