@@ -1,10 +1,12 @@
+import numpy as np
 import hypothesis.strategies as s
+from hypothesis.extra.numpy import arrays
 from hypothesis import given
 from statsmodels.stats.diagnostic import normal_ad
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from sklearn.preprocessing import StandardScaler
 
-from houselib import calculate_results_for_test, get_df
+from houselib import calculate_results_for_test, get_df, load_model
 
 
 MODEL_PATH = './src/models/model.pkl'
@@ -45,3 +47,14 @@ def test_multicollinearity_assumption(datapath=DATA_PATH):
 
     # assert possible_multicollinearity == 0
     assert definite_multicollinearity == 0
+
+
+@given(arrays(np.float, (1, 25), elements=s.floats(0, 200)))
+def test_predictions(frame):
+    """
+    Assumes that model works with any values and assumption of linearity is fulfilled
+    """
+    model = load_model(MODEL_PATH)
+    prediction = model.predict(frame)
+    linear_pred = np.dot(model.coef_, frame[0]) + model.intercept_
+    assert linear_pred - prediction == 0.0
