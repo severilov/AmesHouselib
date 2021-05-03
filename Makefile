@@ -23,11 +23,11 @@ requirements: test_environment
 
 
 ## Add remote Google-Drive storage
-sync_data_from_drive: requirements
+sync_data_from_drive:
 	dvc remote add -d storage gdrive://$(BUCKET)
 
 ## Download Data from Google-Drive using dvc
-pull_data: sync_data_from_drive
+pull_data: requirements
 	dvc pull
 
 ## Delete all compiled Python files recursively in the current directory
