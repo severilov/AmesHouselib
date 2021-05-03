@@ -61,8 +61,8 @@ train_pred_model:
   stage: test
   script:
     - docker pull $CONTAINER_TEST_IMAGE
-    - docker run make clean
-    - docker run make predict
+    - docker run $CONTAINER_TEST_IMAGE make clean
+    - docker run $CONTAINER_TEST_IMAGE make predict
   only:
     - branches
   except:
