@@ -1,56 +1,71 @@
-.PHONY: help requirements sync_data_from_drive clean test_environment train predict tests
+.PHONY: help requirements sync_data_from_drive pull_data clean test_environment train predict tests
 
 PROJECT_NAME = houselib
 PYTHON_INTERPRETER = python3
+BUCKET = 1kbww1knOuM-GMIAH3ifN-Zwhwx4oW_2v
 
 include .env
-
-## Install Python Dependencies
-requirements:
-	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-	$(PYTHON_INTERPRETER) -m pip install -r requirements-test.txt
-
-## Download Data from Google-Drive using dvc
-sync_data_from_drive:
-	dvc pull data/ # TODO
-
-## Delete all compiled Python files recursively in the current directory
-clean:
-	find . | grep -E "(__pycache__|\.pyc$|\.pyo$)" | xargs rm -rf
 
 ## Test python environment is setup correctly
 test_environment:
 	$(PYTHON_INTERPRETER) test_environment.py
 
+## Install Python Dependencies
+requirements: test_environment
+	$(PYTHON_INTERPRETER) setup.py install
+	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
+	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
+	$(PYTHON_INTERPRETER) -m pip install -r requirements-test.txt
+	$(PYTHON_INTERPRETER) -m pip install dvc
+	$(PYTHON_INTERPRETER) -m pip install pydrive2
+	mkdir ${LOG_PATH}
+	mkdir ${MODELS_PATH}
+
+
+## Add remote Google-Drive storage
+sync_data_from_drive: requirements
+	dvc remote add -d storage gdrive://$(BUCKET)
+
+## Download Data from Google-Drive using dvc
+pull_data: sync_data_from_drive
+	dvc pull
+
+## Delete all compiled Python files recursively in the current directory
+clean:
+	find . -type f -name "*.py[co]" -delete
+	find . -type d -name "__pycache__" -delete
+
 ## Train the model on previously created dataset and save logs to Google-Drive
-train:
+train: pull_data
 	$(PYTHON_INTERPRETER) src/scripts/train.py \
-        	--data_path ${DATA_PATH} \
-       		--results_path ${RESULTS_PATH} \
-        	--models_path ${MODELS_PATH} \
-        	--log_path ${LOG_PATH}
+					--models_path ${MODELS_PATH} \
+       		--logs True \
+        	--model_type ${MODEL_TYPE} &>${LOG_PATH}/train_log.txt
 	dvc add -R ${MODELS_PATH}
-	dvc add -R ${RESULTS_PATH}
+	dvc add -R ${LOG_PATH}
 	dvc commit
+	dvc push
 
 ## Predict using the trained model and save logs to Google-Drive
-predict:
+predict: train
 	$(PYTHON_INTERPRETER) src/scripts/test.py \
-        	--data_path ${DATA_PATH} \
-        	--results_path ${RESULTS_PATH} \
-        	--models_path ${MODELS_PATH} \
-        	--log_path ${LOG_PATH}
-	dvc add -R ${RESULTS_PATH}
+        	--logs True \
+        	--model ${MODEL_PATH} &>${LOG_PATH}/test_log.txt
+	dvc add -R ${LOG_PATH}
 	dvc commit
+	dvc push
 
 ## Run all tests by pytest, save reports
 tests:
 	pytest --cov=houselib \
 				 --cov-branch \
 				 --cov-report term-missing \
-				 --cov-report xml:./results/coverage.xml test \
-				 --junitxml=./results/report.xml
+				 --cov-report xml:${LOG_PATH}/coverage.xml test \
+				 --junitxml=${LOG_PATH}/report.xml
+	dvc add -R ${LOG_PATH}
+	dvc commit
+	dvc push
+
 
 .DEFAULT: help
 help:
@@ -61,6 +76,8 @@ help:
 	@echo "make clean"
 	@echo "       Delete all compiled Python files"
 	@echo "make sync_data_from_drive"
+	@echo "       Add remote Google-Drive storage"
+	@echo "make pull_data"
 	@echo "       Download Data from Google-Drive using dvc"
 	@echo "make train"
 	@echo "       Train the model on previously created dataset and save logs to Google-Drive"

@@ -47,12 +47,25 @@ pytest:
   stage: test
   script:
     - docker pull $CONTAINER_TEST_IMAGE
-    - docker run -v $(pwd):/results $CONTAINER_TEST_IMAGE pytest --cov=houselib --cov-branch --cov-report term-missing --cov-report xml:/results/coverage.xml test --junitxml=/results/report.xml
+    - docker run -v $(pwd):/logs $CONTAINER_TEST_IMAGE pytest --cov=houselib --cov-branch --cov-report term-missing --cov-report xml:/logs/coverage.xml test --junitxml=/results/report.xml
   artifacts:
     when: always
     reports:
       junit: report.xml
       cobertura: coverage.xml
+  tags:
+    - local
+
+train_pred_model:
+  stage: test
+  script:
+    - make clean
+    - make train
+    - make predict
+  only:
+    - branches
+  except:
+    - master
   tags:
     - local
 

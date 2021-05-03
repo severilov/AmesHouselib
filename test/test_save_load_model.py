@@ -10,9 +10,9 @@ from sklearn.preprocessing import StandardScaler
 from houselib import save_model, load_model, get_df
 
 
-test_paths = ['./src/models/model.pkl']
+test_load_paths = ['./src/models/model.pkl']
 
-@pytest.mark.parametrize('path', test_paths)
+@pytest.mark.parametrize('path', test_load_paths)
 def test_load_model(path):
     '''
     Check if function load model
@@ -22,7 +22,9 @@ def test_load_model(path):
     assert model is not None
 
 
-@pytest.mark.parametrize('path', test_paths)
+test_save_paths = ['./src/models']
+
+@pytest.mark.parametrize('path', test_save_paths)
 def test_save_model(path):
     '''
     Check if function saved model correctly
@@ -38,7 +40,7 @@ def test_save_model(path):
     model = LinearRegression()
     model.fit(X_train, y_train)
 
-    save_model(model, path=path)
-    assert os.path.isfile(path) == True
-    model = load_model(path)
+    save_model(model, modelspath=path)
+    assert os.path.isfile(f'{path}/model.pkl') == True
+    model = load_model(f'{path}/model.pkl')
     assert model is not None
