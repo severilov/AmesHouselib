@@ -19,7 +19,6 @@ before_script:
   - apk update
   - apk add python3
   - apk add py3-pip
-  - apk add make
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - pip3 install -U sphinx
   - pip3 install pytest-cov
