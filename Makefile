@@ -12,14 +12,14 @@ test_environment:
 
 ## Install Python Dependencies
 requirements: test_environment
+	mkdir -p ${LOG_PATH}
+	mkdir -p ${MODELS_PATH}
 	$(PYTHON_INTERPRETER) setup.py install
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 	$(PYTHON_INTERPRETER) -m pip install -r requirements-test.txt
 	$(PYTHON_INTERPRETER) -m pip install dvc
 	$(PYTHON_INTERPRETER) -m pip install pydrive2
-	mkdir ${LOG_PATH}
-	mkdir ${MODELS_PATH}
 
 
 ## Add remote Google-Drive storage
