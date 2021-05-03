@@ -1,8 +1,5 @@
 # log_target
-import sys
 import numpy as np
-
-sys.path.append('./src/')
 
 from houselib import log_target, delete_outliers,  add_new_features, read_ames_data, prepare_data, fill_lot_frontage
 
