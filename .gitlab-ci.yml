@@ -1,22 +1,80 @@
-image: python:3.7-alpine
+image: docker:19.03.12
 
-test:
+services:
+  - docker:19.03.12-dind
+
+stages:
+  - build
+  - test
+  - release
+  - deploy
+
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE/houselib_test:$CI_COMMIT_REF_SLUG
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/houselib:latest
+
+
+before_script:
+  - apk update
+  - apk add python3
+  - apk add py3-pip
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - pip3 install -U sphinx
+  - pip3 install pytest-cov
+
+build:
+  stage: build
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+  tags:
+    - local
+
+test_documentation:
   stage: test
   script:
-  - pip install -U sphinx
-  - sphinx-build -b html ./docs/source ./public
+    - sphinx-build -b html ./docs/source ./public
   only:
-  - branches
+    - branches
   except:
-  - master
+    - master
+  tags:
+    - local
+
+pytest:
+  stage: test
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker run -v $(pwd):/results $CONTAINER_TEST_IMAGE pytest --cov=houselib --cov-branch --cov-report term-missing --cov-report xml:/results/coverage.xml test --junitxml=/results/report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+      cobertura: coverage.xml
+  tags:
+    - local
+
+release-image:
+  stage: release
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+  only:
+    - master
+  tags:
+    - local
 
 pages:
   stage: deploy
   script:
-  - pip install -U sphinx
-  - sphinx-build -b html ./docs/source ./public
+    - sphinx-build -b html ./docs/source ./public
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - master
+    - master
+  tags:
+    - local

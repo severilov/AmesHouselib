@@ -1,8 +1,5 @@
 # delete_outliers
-import sys
 import numpy as np
-
-sys.path.append('./src/')
 
 from houselib import delete_outliers,  add_new_features, read_ames_data, prepare_data, fill_lot_frontage
 
@@ -11,7 +8,7 @@ def test_delete_outliers():
     '''
     Test if all outliers were deleted and not deleted others
     '''
-    df = read_ames_data('./data/AmesHousing.txt')
+    df = read_ames_data('./data/raw/AmesHousing.txt')
     df = prepare_data(df)
     df = fill_lot_frontage(df)
     df = add_new_features(df)
