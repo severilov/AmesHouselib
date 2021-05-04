@@ -32,8 +32,6 @@ build:
   tags:
     - local
 
-
-
 train_pred_model:
   stage: test
   script:
