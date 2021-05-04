@@ -28,6 +28,7 @@ sync_data_from_drive:
 
 ## Download Data from Google-Drive using dvc
 pull_data: requirements
+	export GOOGLE_APPLICATION_CREDENTIALS=".dvc/opportune-sylph-230917-5abc1b6e125d.json"
 	dvc pull
 
 ## Delete all compiled Python files recursively in the current directory
