@@ -1,6 +1,10 @@
 [core]
-    remote = storage
+    remote = storage2
 ['remote "storage"']
     url = gdrive://1kbww1knOuM-GMIAH3ifN-Zwhwx4oW_2v
+    gdrive_use_service_account = true
+    gdrive_service_account_json_file_path = opportune-sylph-230917-5abc1b6e125d.json
+['remote "storage2"']
+    url = gdrive://drive/u/3/folders/1kbww1knOuM-GMIAH3ifN-Zwhwx4oW_2v
     gdrive_use_service_account = true
     gdrive_service_account_json_file_path = opportune-sylph-230917-5abc1b6e125d.json
