@@ -2,7 +2,7 @@
 
 PROJECT_NAME = houselib
 PYTHON_INTERPRETER = python3
-BUCKET = drive/u/3/folders/1kbww1knOuM-GMIAH3ifN-Zwhwx4oW_2v
+BUCKET = 1kbww1knOuM-GMIAH3ifN-Zwhwx4oW_2v
 
 include .env
 
