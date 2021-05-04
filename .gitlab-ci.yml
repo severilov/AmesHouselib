@@ -33,6 +33,7 @@ build:
     - local
 
 
+
 train_pred_model:
   stage: test
   script:
