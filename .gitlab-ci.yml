@@ -32,6 +32,30 @@ build:
   tags:
     - local
 
+test_documentation:
+  stage: test
+  script:
+    - sphinx-build -b html ./docs/source ./public
+  only:
+    - branches
+  except:
+    - master
+  tags:
+    - local
+
+pytest:
+  stage: test
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker run -v $(pwd):/logs $CONTAINER_TEST_IMAGE pytest --cov=houselib --cov-branch --cov-report term-missing --cov-report xml:/logs/coverage.xml test --junitxml=/results/report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+      cobertura: coverage.xml
+  tags:
+    - local
+
 train_pred_model:
   stage: test
   script:
