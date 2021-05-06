@@ -10,11 +10,11 @@ def fix_seeds(seed=42):
     np.random.seed(seed)
 
 
-def save_model(model, path='./src/models/model.pkl'):
+def save_model(model, modelspath='./src/models'):
     '''
     Save ML model into path
     '''
-    with open(path, 'wb') as handle:
+    with open(f'{modelspath}/model.pkl', 'wb') as handle:
         pickle.dump(model, handle)
 
 
