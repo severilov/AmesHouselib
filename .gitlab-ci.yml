@@ -4,9 +4,9 @@ services:
   - docker:19.03.12-dind
 
 stages:
+  - build
   - test
   - train_pred
-  - build
   - release
   - deploy
 
@@ -65,7 +65,6 @@ pytest:
   tags:
     - local
 
-
 train_pred_model:
   stage: train_pred
   image: python:3.9.3-slim-buster
@@ -80,8 +79,6 @@ train_pred_model:
     - make clean
     - make predict
   only:
-    - branches
-  except:
     - master
   tags:
     - local
