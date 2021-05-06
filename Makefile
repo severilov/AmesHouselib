@@ -40,20 +40,20 @@ train: pull_data
 	$(PYTHON_INTERPRETER) src/scripts/train.py \
 					--models_path ${MODELS_PATH} \
        		--logs True \
-        	--model_type ${MODEL_TYPE} &>${LOG_PATH}/train_log.txt
+        	--model_type ${MODEL_TYPE}
 	dvc add -R ${MODELS_PATH}
 	dvc add -R ${LOG_PATH}
 	dvc commit
-	dvc push
+	dvc push -r storage
 
 ## Predict using the trained model and save logs to Google-Drive
 predict: train
 	$(PYTHON_INTERPRETER) src/scripts/test.py \
         	--logs True \
-        	--model ${MODEL_PATH} &>${LOG_PATH}/test_log.txt
+        	--model ${MODEL_PATH}
 	dvc add -R ${LOG_PATH}
 	dvc commit
-	dvc push
+	dvc push -r storage
 
 ## Run all tests by pytest, save reports
 tests:
