@@ -4,8 +4,9 @@ services:
   - docker:19.03.12-dind
 
 stages:
-  - test
+  - train_pred
   - build
+  - test
   - release
   - deploy
 
@@ -60,12 +61,18 @@ pytest:
     - local
 
 train_pred_model:
-  stage: test
+  stage: train_pred
+  image: python:3.9.3-slim-buster
+  before_script:
+    - apt-get update
+    - apt-get -y install make
+    - pip3 install -r requirements.txt
+    - python3 setup.py install
+    - base64 -d $GDRIVE_KEY > gdrive_key.json
   script:
-    - dvc remote modify mipt_drive gdrive_service_account_json_file_path gdrive_service_key.json
-    - docker pull $CONTAINER_TEST_IMAGE
-    - docker run $CONTAINER_TEST_IMAGE make clean
-    - docker run $CONTAINER_TEST_IMAGE make predict
+    - dvc remote modify mipt_drive gdrive_service_account_json_file_path gdrive_key.json
+    - make clean
+    - make predict
   only:
     - branches
   except:
