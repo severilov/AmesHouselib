@@ -56,7 +56,7 @@ predict: train
 	dvc push -r storage
 
 ## Run all tests by pytest, save reports
-tests:
+tests: pull_data
 	pytest --cov=houselib \
 				 --cov-branch \
 				 --cov-report term-missing \
@@ -64,7 +64,7 @@ tests:
 				 --junitxml=${LOG_PATH}/report.xml
 	dvc add -R ${LOG_PATH}
 	dvc commit
-	dvc push
+	dvc push -r storage
 
 
 .DEFAULT: help
