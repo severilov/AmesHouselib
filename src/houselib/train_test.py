@@ -21,7 +21,7 @@ MODELS_PATH = './src/models'
 LOG_PATH = './logs'
 
 
-def train_model(modeltype, show_res=True, models_path=MODELS_PATH, datapath=DATA_PATH), log_path=LOG_PATH):
+def train_model(modeltype, show_res=True, models_path=MODELS_PATH, datapath=DATA_PATH, log_path=LOG_PATH):
     log_file = f'{log_path}/train_{uuid4()}'
     logging.basicConfig(filename=log_file, format='%(message)s', level=logging.INFO)
 
