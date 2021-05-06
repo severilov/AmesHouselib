@@ -4,8 +4,8 @@ services:
   - docker:19.03.12-dind
 
 stages:
-  - build
   - test
+  - build
   - release
   - deploy
 
@@ -22,22 +22,8 @@ before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - pip3 install -U sphinx
   - pip3 install pytest-cov
-  - base64 -D -i $GDRIVE_SERVICE_ACCOUNT_JSON > gdrive_service_key.json
+  - base64 -Dd -i $GDRIVE_SERVICE_ACCOUNT_JSON > gdrive_service_key.json
 
-train_pred_model:
-  stage: test
-  script:
-    - dvc remote modify mipt_drive gdrive_service_account_json_file_path gdrive_service_key.json
-    - docker pull $CONTAINER_TEST_IMAGE
-    - docker run $CONTAINER_TEST_IMAGE make clean
-    - docker run $CONTAINER_TEST_IMAGE make predict
-  only:
-    - branches
-  except:
-    - master
-  tags:
-    - local
-    
 build:
   stage: build
   script:
@@ -71,7 +57,19 @@ pytest:
   tags:
     - local
 
-
+train_pred_model:
+  stage: test
+  script:
+    - dvc remote modify mipt_drive gdrive_service_account_json_file_path gdrive_service_key.json
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker run $CONTAINER_TEST_IMAGE make clean
+    - docker run $CONTAINER_TEST_IMAGE make predict
+  only:
+    - branches
+  except:
+    - master
+  tags:
+    - local
 
 release-image:
   stage: release
