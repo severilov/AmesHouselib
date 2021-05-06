@@ -70,7 +70,7 @@ tests: pull_data
 .DEFAULT: help
 help:
 	@echo "make requirements"
-	@echo "       Install Python Dependencies"
+	@echo "       Install Python Dependencies and make necessary folders"
 	@echo "make test_environment"
 	@echo "       Test python environment is setup correctly"
 	@echo "make clean"
