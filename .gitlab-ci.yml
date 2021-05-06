@@ -22,6 +22,8 @@ before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - pip3 install -U sphinx
   - pip3 install pytest-cov
+  - pip3 install dvc
+  - pip install pydrive2
   - base64 -d $GDRIVE_KEY > gdrive_service_key.json
 
 build:
